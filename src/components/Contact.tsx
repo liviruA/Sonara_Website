@@ -5,9 +5,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,40 +34,60 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Create mailto link
-    const subject = `Service Inquiry - ${formData.serviceType || 'General'}`;
-    const body = `Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Company: ${formData.company}
-Service Type: ${formData.serviceType}
+    if (!formData.name || !formData.email || !formData.message || !formData.serviceType) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-Message:
-${formData.message}`;
+    setIsSubmitting(true);
 
-    const mailtoLink = `mailto:sonara_services@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    // Show success toast
-    toast({
-      title: "Email Client Opened",
-      description: "Your email client has been opened with the message pre-filled. Please send the email to complete your inquiry.",
-    });
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData
+      });
 
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      serviceType: '',
-      message: ''
-    });
+      if (error) {
+        throw error;
+      }
+
+      // Show success animation
+      setShowSuccess(true);
+      
+      // Reset form after a delay
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          serviceType: '',
+          message: ''
+        });
+        setShowSuccess(false);
+      }, 3000);
+
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll get back to you soon.",
+      });
+
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -236,8 +259,38 @@ ${formData.message}`;
                     />
                   </div>
                   
-                  <Button type="submit" className="w-full">
-                    Send Message
+                  <Button 
+                    type="submit" 
+                    className="w-full relative overflow-hidden"
+                    disabled={isSubmitting}
+                  >
+                    {showSuccess ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="w-5 h-5 border-2 border-white rounded-full flex items-center justify-center animate-scale-in">
+                          <svg 
+                            className="w-3 h-3 text-white animate-fade-in" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round" 
+                              strokeWidth={3} 
+                              d="M5 13l4 4L19 7" 
+                            />
+                          </svg>
+                        </div>
+                        <span>Message Sent!</span>
+                      </div>
+                    ) : isSubmitting ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Sending...</span>
+                      </div>
+                    ) : (
+                      "Send Message"
+                    )}
                   </Button>
                 </form>
               </CardContent>
