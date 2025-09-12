@@ -22,12 +22,16 @@ const Hero = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="px-8">
-                Get Free Quote
-              </Button>
-              <Button variant="outline" size="lg" className="px-8">
-                Our Services
-              </Button>
+              <a href="#contact">
+                <Button size="lg" className="px-8">
+                  Get Free Quote
+                </Button>
+              </a>
+              <a href="#services">
+                <Button variant="outline" size="lg" className="px-8">
+                  Our Services
+                </Button>
+              </a>
             </div>
           </div>
           
