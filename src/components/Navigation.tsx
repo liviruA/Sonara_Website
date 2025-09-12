@@ -9,21 +9,21 @@ const Navigation = () => {
             <img className="flex justify-between items-center h-20" src="/src/assets/logo.png" alt="alternatetext"></img>
           </div>
           
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#" className="text-gray-500 hover:text-white-900 px-3 py-2 text-sm font-medium">
+          <div className="hidden md:block flex-1">
+            <div className="flex items-center justify-center space-x-8">
+              <a href="#" className="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium transition-colors">
                 Home
               </a>
-              <a href="#about" className="text-gray-500 hover:text-white-900 px-3 py-2 text-sm font-medium">
+              <a href="#about" className="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium transition-colors">
                 About
               </a>
-              <a href="#services" className="text-gray-500 hover:text-white-900 px-3 py-2 text-sm font-medium">
+              <a href="#services" className="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium transition-colors">
                 Services
               </a>
-              <a href="#contact" className="text-gray-500 hover:text-white-900 px-3 py-2 text-sm font-medium">
+              <a href="#contact" className="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium transition-colors">
                 Contact
               </a>
-              <Button variant="default" size="sm">
+              <Button variant="outline" size="sm" className="ml-4">
                 Admin
               </Button>
             </div>

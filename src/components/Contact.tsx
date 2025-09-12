@@ -3,8 +3,70 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 const Contact = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    serviceType: '',
+    message: ''
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSelectChange = (value: string) => {
+    setFormData({
+      ...formData,
+      serviceType: value
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Create mailto link
+    const subject = `Service Inquiry - ${formData.serviceType || 'General'}`;
+    const body = `Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Company: ${formData.company}
+Service Type: ${formData.serviceType}
+
+Message:
+${formData.message}`;
+
+    const mailtoLink = `mailto:sonara_services@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success toast
+    toast({
+      title: "Email Client Opened",
+      description: "Your email client has been opened with the message pre-filled. Please send the email to complete your inquiry.",
+    });
+
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
+      serviceType: '',
+      message: ''
+    });
+  };
+
   return (
     <section id="contact" className="py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,19 +152,32 @@ const Contact = () => {
                 <CardTitle className="text-xl text-gray-900">Send us a Message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Name *
                       </label>
-                      <Input placeholder="Your name" required />
+                      <Input 
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="Your name" 
+                        required 
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Email *
                       </label>
-                      <Input type="email" placeholder="Your email" required />
+                      <Input 
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Your email" 
+                        required 
+                      />
                     </div>
                   </div>
                   
@@ -111,13 +186,23 @@ const Contact = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Phone
                       </label>
-                      <Input placeholder="Your phone number" />
+                      <Input 
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="Your phone number" 
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Company
                       </label>
-                      <Input placeholder="Your company" />
+                      <Input 
+                        name="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
+                        placeholder="Your company" 
+                      />
                     </div>
                   </div>
                   
@@ -125,7 +210,7 @@ const Contact = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Service Type *
                     </label>
-                    <Select>
+                    <Select value={formData.serviceType} onValueChange={handleSelectChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a service" />
                       </SelectTrigger>
@@ -142,6 +227,9 @@ const Contact = () => {
                       Message *
                     </label>
                     <Textarea 
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
                       placeholder="Tell us about your cleaning needs..." 
                       rows={4} 
                       required 
