@@ -24,7 +24,6 @@ export const supabase = {
       if (!client) {
         throw new Error('Supabase client not configured')
       }
-      // @ts-expect-error - types narrow correctly at runtime
       return client.functions.invoke(name, options)
     },
   },
