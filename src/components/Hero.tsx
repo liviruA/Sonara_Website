@@ -8,9 +8,9 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900">
+              <h1 className="text-4xl lg:text-5xl font-bold text-black-100">
                 Professional{" "}
-                <span className="text-primary">Cleaning</span>{" "}
+                <span className="text-[#C19A6B]">Cleaning</span>{" "}
                 Services
               </h1>
               <p className="text-xl text-gray-600">
@@ -23,7 +23,7 @@ const Hero = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="#contact">
-                <Button size="lg" className="px-8">
+                <Button size="lg" className="hover:bg-[#C19A6B] px-8">
                   Get Free Quote
                 </Button>
               </a>

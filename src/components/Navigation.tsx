@@ -7,21 +7,21 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20">
         <div className="flex justify-between items-center h-full">
           <div className="flex-shrink-0">
-            <img className="h-10 w-auto" src={Logo} alt="Sonara Services logo" />
+            <img className="h-20 w-auto" src={Logo} alt="Sonara Services logo" />
           </div>
           
           <div className="hidden md:block flex-1">
             <div className="flex items-center justify-center space-x-8">
-              <a href="#" className="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#" className="text-white hover:text-[#C19A6B] px-3 py-2 text-sm font-medium transition-colors">
                 Home
               </a>
-              <a href="#about" className="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#about" className="text-white hover:text-[#C19A6B] px-3 py-2 text-sm font-medium transition-colors">
                 About
               </a>
-              <a href="#services" className="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#services" className="text-white hover:text-[#C19A6B] px-3 py-2 text-sm font-medium transition-colors">
                 Services
               </a>
-              <a href="#contact" className="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#contact" className="text-white hover:text-[#C19A6B] px-3 py-2 text-sm font-medium transition-colors">
                 Contact
               </a>
               <Button variant="outline" size="sm" className="ml-4">
