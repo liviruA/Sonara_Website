@@ -1,6 +1,31 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+let client: SupabaseClient | null = null
+
+if (supabaseUrl && supabaseAnonKey) {
+  try {
+    client = createClient(supabaseUrl, supabaseAnonKey)
+  } catch (e) {
+    console.error('Failed to initialize Supabase client:', e)
+  }
+} else {
+  console.warn('Supabase URL or Anon Key not configured. Skipping Supabase client initialization.')
+}
+
+export const supabase = {
+  functions: {
+    invoke: async (
+      name: string,
+      options?: Parameters<SupabaseClient['functions']['invoke']>[1]
+    ) => {
+      if (!client) {
+        throw new Error('Supabase client not configured')
+      }
+      // @ts-expect-error - types narrow correctly at runtime
+      return client.functions.invoke(name, options)
+    },
+  },
+} as Pick<SupabaseClient, 'functions'>
