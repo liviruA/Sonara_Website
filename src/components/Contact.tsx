@@ -57,13 +57,13 @@ const Contact = () => {
         "service_8rcr4ac", 
         "template_6vgntas",
         {
-          from_name: formData.name,
-          from_email: formData.email,
+          title: `${formData.serviceType} - New Quote Request`,
+          name: formData.name,
+          email: formData.email,
           phone: formData.phone || 'Not provided',
           company: formData.company || 'Not provided',
           service_type: formData.serviceType,
-          message: formData.message,
-          to_email: "sonara_services@outlook.com"
+          message: formData.message
         }
       );
 
