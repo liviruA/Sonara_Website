@@ -262,6 +262,7 @@ const Contact = () => {
                         <SelectItem value="retail">Retail Cleaning</SelectItem>
                         <SelectItem value="industrial">Industrial Cleaning</SelectItem>
                         <SelectItem value="both">Both Services</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
