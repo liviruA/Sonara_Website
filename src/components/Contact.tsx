@@ -55,7 +55,7 @@ const Contact = () => {
       // Send email to your business email
       await emailjs.send(
         "service_8rcr4ac", 
-        "template_6vgntas",
+        "template_j157bww",
         {
           title: `${formData.serviceType} - New Quote Request`,
           name: formData.name,
@@ -64,6 +64,17 @@ const Contact = () => {
           company: formData.company || 'Not provided',
           service_type: formData.serviceType,
           message: formData.message
+        }
+      );
+
+            // Send confirmation email to customer
+      await emailjs.send(
+        "service_8rcr4ac",
+        "template_19ms3m5",
+        {
+          to_name: formData.name,
+          to_email: formData.email,
+          service_type: formData.serviceType
         }
       );
 
