@@ -67,17 +67,6 @@ const Contact = () => {
         }
       );
 
-      // Send confirmation email to customer
-      await emailjs.send(
-        "service_8rcr4ac",
-        "template_uzk7y4l",
-        {
-          to_name: formData.name,
-          to_email: formData.email,
-          service_type: formData.serviceType
-        }
-      );
-
       // Show success animation
       setShowSuccess(true);
       
