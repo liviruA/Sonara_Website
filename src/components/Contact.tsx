@@ -50,12 +50,12 @@ const Contact = () => {
 
     try {
       // Initialize EmailJS with your public key
-      emailjs.init("YOUR_PUBLIC_KEY_HERE");
+      emailjs.init("vgY0xmmoY3q7rVgVA");
 
       // Send email to your business email
       await emailjs.send(
-        "YOUR_SERVICE_ID", 
-        "YOUR_TEMPLATE_ID",
+        "service_8rcr4ac", 
+        "template_6vgntas",
         {
           from_name: formData.name,
           from_email: formData.email,
@@ -69,8 +69,8 @@ const Contact = () => {
 
       // Send confirmation email to customer
       await emailjs.send(
-        "YOUR_SERVICE_ID",
-        "YOUR_CONFIRMATION_TEMPLATE_ID",
+        "service_8rcr4ac",
+        "template_uzk7y4l",
         {
           to_name: formData.name,
           to_email: formData.email,
