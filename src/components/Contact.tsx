@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -49,13 +49,34 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
-        body: formData
-      });
+      // Initialize EmailJS with your public key
+      emailjs.init("YOUR_PUBLIC_KEY_HERE");
 
-      if (error) {
-        throw error;
-      }
+      // Send email to your business email
+      await emailjs.send(
+        "YOUR_SERVICE_ID", 
+        "YOUR_TEMPLATE_ID",
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone || 'Not provided',
+          company: formData.company || 'Not provided',
+          service_type: formData.serviceType,
+          message: formData.message,
+          to_email: "sonara_services@outlook.com"
+        }
+      );
+
+      // Send confirmation email to customer
+      await emailjs.send(
+        "YOUR_SERVICE_ID",
+        "YOUR_CONFIRMATION_TEMPLATE_ID",
+        {
+          to_name: formData.name,
+          to_email: formData.email,
+          service_type: formData.serviceType
+        }
+      );
 
       // Show success animation
       setShowSuccess(true);
