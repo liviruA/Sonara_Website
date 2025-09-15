@@ -17,7 +17,7 @@ const Hero = () => {
                 Retail and Industrial Cleaning Excellence
               </p>
               <p className="text-gray-700 text-lg leading-relaxed">
-                Trust Sonara Maintenance & Services for comprehensive cleaning solutions tailored to your business needs. We deliver exceptional results with attention to detail and professional service.
+                Trust Sonara Services & Maintenance for comprehensive cleaning solutions tailored to your business needs. We deliver exceptional results with attention to detail and professional service.
               </p>
             </div>
             

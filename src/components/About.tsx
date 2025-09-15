@@ -45,7 +45,7 @@ const About = () => {
             About Sonara
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Led by Managing Director Bandula Abey, Sonara Maintenance & Services provides 
+            Led by Managing Director Bandula Abey, Sonara Services & Maintenance provides 
             top-quality cleaning solutions for retail and industrial clients across the Greater Toronto Area.
           </p>
         </div>
